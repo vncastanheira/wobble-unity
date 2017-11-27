@@ -1,4 +1,4 @@
-﻿Shader "vdev/FX/Wobble (Multiply)"
+﻿Shader "vdev/FX/Wobble (Overlay)"
 {
 	Properties
 	{
@@ -46,6 +46,19 @@
 				const float PI = 3.14;
 				int _Speed;
 
+				float overlay(float a, float b)
+				{
+					float c;
+					if (a < 0.5)
+					{
+						c = 2 * a * b;
+					}
+					else {
+						c = 1 - (2 * (1 - a) *(1 - b));
+					}
+					return c;
+				}
+
 				fixed4 frag(v2f i) : SV_Target
 				{
 					int speed = round(_Speed);
@@ -53,7 +66,9 @@
 					i.uv.x += sine * 0.01;
 
 					fixed4 col = tex2D(_MainTex, i.uv);
-					col *= _Color;
+					col.r = overlay(col.r, _Color.r);
+					col.g = overlay(col.g, _Color.g);
+					col.b = overlay(col.b, _Color.b);
 					return col;
 				}
 			ENDCG

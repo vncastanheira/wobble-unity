@@ -1,4 +1,4 @@
-﻿Shader "vdev/FX/Wobble (Multiply)"
+﻿Shader "vdev/FX/Wobble (Screen)"
 {
 	Properties
 	{
@@ -46,6 +46,12 @@
 				const float PI = 3.14;
 				int _Speed;
 
+				float screen(float a, float b)
+				{
+					float c = 1 - (2 * (1 - a) *(1 - b));
+					return c;
+				}
+
 				fixed4 frag(v2f i) : SV_Target
 				{
 					int speed = round(_Speed);
@@ -53,7 +59,9 @@
 					i.uv.x += sine * 0.01;
 
 					fixed4 col = tex2D(_MainTex, i.uv);
-					col *= _Color;
+					col.r = screen(col.r, _Color.r);
+					col.g = screen(col.g, _Color.g);
+					col.b = screen(col.b, _Color.b);
 					return col;
 				}
 			ENDCG
