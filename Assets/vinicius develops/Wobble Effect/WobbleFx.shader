@@ -43,8 +43,8 @@
 				sampler2D _MainTex;
 				uniform float4 _Color;
 				float _Intensity;
-				const float PI = 3.14;
 				int _Speed;
+				const float PI = 3.14;
 
 				fixed4 frag(v2f i) : SV_Target
 				{
