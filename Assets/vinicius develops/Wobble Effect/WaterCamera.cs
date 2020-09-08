@@ -13,14 +13,10 @@ namespace vnc.FX
         public Shader overlay;
         public Shader screen;
 
+        [HideInInspector] public bool effectActive;
+
         private void Update()
         {
-            float yAxis = transform.position.y;
-            yAxis += Input.GetKey(KeyCode.UpArrow) ? 1 : 0;
-            yAxis -= Input.GetKey(KeyCode.DownArrow) ? 1 : 0;
-            yAxis = Mathf.Clamp(yAxis, 10, 40);
-            transform.position = Vector3.up * yAxis;
-
             switch (Blend)
             {
                 case BlendMode.Multiply:
@@ -50,8 +46,7 @@ namespace vnc.FX
                 return;
             }
 
-            float yAxis = transform.position.y;
-            if (yAxis <= 20)
+            if (effectActive)
             {
                 Wobble.SetColor("_Color", underwaterColor);
                 Graphics.Blit(source, destination, Wobble);
