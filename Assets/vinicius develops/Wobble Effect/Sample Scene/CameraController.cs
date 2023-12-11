@@ -6,14 +6,12 @@ namespace vnc.FX
     {
         public WaterCamera waterCamera;
         public float minHeight = 20;
+        public float speed = 6f;
 
         private void Update()
         {
-            float yAxis = transform.position.y;
-            yAxis += Input.GetKey(KeyCode.UpArrow) ? 1 : 0;
-            yAxis -= Input.GetKey(KeyCode.DownArrow) ? 1 : 0;
-            yAxis = Mathf.Clamp(yAxis, 10, 40);
-            transform.position = Vector3.up * yAxis;
+            int direction = (Input.GetKey(KeyCode.UpArrow) ? 1 : 0) - (Input.GetKey(KeyCode.DownArrow) ? 1 : 0);
+            transform.position += Vector3.up * direction * speed * Time.deltaTime;
 
             waterCamera.effectActive = transform.position.y < minHeight;
         }
