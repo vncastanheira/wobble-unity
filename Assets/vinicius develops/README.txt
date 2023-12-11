@@ -1,5 +1,5 @@
 ==================================
-Wooble Effect by Vinicius Develops
+Wooble Effect for Built-in renderer
 ==================================
 
 This is a simple shader that gives a 
